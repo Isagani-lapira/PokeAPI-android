@@ -94,20 +94,16 @@ public class MainActivity extends AppCompatActivity {
 
             try {
 
+                //pokemon image
                 JSONObject profile = response.getJSONObject("sprites");
                 JSONObject other = profile.getJSONObject("other");
                 JSONObject home = other.getJSONObject("home");
                 String front_default = home.getString("front_default");
 
 
-                //display the image
-                Picasso.get().load(front_default).into(imgProfile);
-
                 //for tvindex
-                JSONArray array = response.getJSONArray("game_indices");
-                JSONObject jsonObject = array.getJSONObject(index);
-                String game_index = tvIndex.getText()+jsonObject.getString("game_index")
-                        .toUpperCase();
+                String id = response.getString("id");
+                String pokemonIndex = tvIndex.getText()+id;
 
                 //for tvPokeName
                 JSONObject species = response.getJSONObject("species");
@@ -142,8 +138,11 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
+                //display the image
+                Picasso.get().load(front_default).into(imgProfile);
+
                 //displaying values
-                tvIndex.setText(game_index);
+                tvIndex.setText(pokemonIndex);
                 tvPokeName.setText(pokemonName);
                 tvType.setText(typeVal);
                 tvHP.setText(hpVal);
