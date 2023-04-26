@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         //search the pokemon
         btSearch.setOnClickListener(v->{
-            String pokemonSearch = etsearch.getText().toString();
+            String pokemonSearch = etsearch.getText().toString().toLowerCase();
 
             if(pokemonSearch.equals(""))
                 Toast.makeText(this, "Enter a pokemon first", Toast.LENGTH_SHORT).show();
