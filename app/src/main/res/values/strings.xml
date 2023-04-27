@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Pokemon API</string>
-    <string name="indexID">Index ID: </string>
+    <string name="indexID">Pokemon Index </string>
     <string name="pkName">Pokemon name: </string>
     <string name="typeString">Type: </string>
     <string name="attackString">Attack: </string>
@@ -10,4 +10,5 @@
     <string name="speedString">Speed: </string>
     <string name="hpString">HP: </string>
     <string name="warning_statement">The pokemon you are searching is not currently in the index please make sure the pokemon you looking is existed in the pokemon world</string>
+    <string name="defaul_value">0</string>
 </resources>

@@ -1,14 +1,23 @@
 package com.example.pokemonapi;
 
+import androidx.annotation.ColorRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,10 +35,12 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
 
     EditText etsearch;
-    Button btSearch, btClear;
+    ImageButton btSearch, btClear;
     TextView tvIndex, tvPokeName, tvType, tvHP,tvAttack, tvDefense,tvSpecAttack, tvSpecDef,tvSpeed;
-    ImageView imgProfile;
-    
+    ImageView imgProfile, curveBg,ivdesign;
+    Context context = MainActivity.this;
+    int color;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,14 +74,14 @@ public class MainActivity extends AppCompatActivity {
         etsearch.setText("");
         imgProfile.setImageResource(R.drawable.pngegg);
         tvIndex.setText(R.string.indexID);
-        tvPokeName.setText(R.string.pkName);
+        tvPokeName.setText("Who's your Pokemon?");
         tvType.setText(R.string.typeString);
-        tvHP.setText(R.string.hpString);
-        tvAttack.setText(R.string.attackString);
-        tvDefense.setText(R.string.defenseString);
-        tvSpecAttack.setText(R.string.specialAttString);
-        tvSpecDef.setText(R.string.specDefString);
-        tvSpeed.setText(R.string.speedString);
+        tvHP.setText(R.string.defaul_value);
+        tvAttack.setText(R.string.defaul_value);
+        tvDefense.setText(R.string.defaul_value);
+        tvSpecAttack.setText(R.string.defaul_value);
+        tvSpecDef.setText(R.string.defaul_value);
+        tvSpeed.setText(R.string.defaul_value);
     }
 
     private void APICall(String pokemon) {
@@ -104,18 +115,18 @@ public class MainActivity extends AppCompatActivity {
 
                 //for tvindex
                 String id = response.getString("id");
-                String pokemonIndex = tvIndex.getText()+id;
+                String pokemonIndex = "#"+tvIndex.getText()+id;
 
                 //for tvPokeName
                 JSONObject species = response.getJSONObject("species");
-                String pokemonName = tvPokeName.getText()+species.getString("name")
+                String pokemonName = species.getString("name")
                         .toUpperCase();
 
 
                 //for tvType
                 JSONArray type = response.getJSONArray("types");
                 JSONObject typeOBJ = type.getJSONObject(index).getJSONObject("type");
-                String typeVal = tvType.getText()+typeOBJ.getString("name").toUpperCase();
+                String typeVal = typeOBJ.getString("name").toUpperCase();
 
                 //for tvHP
                 JSONArray stats = response.getJSONArray("stats");
@@ -125,22 +136,24 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject statsOBJ = stats.getJSONObject(i);
 
                     if(i==0)
-                        hpVal = " "+tvHP.getText()+statsOBJ.getString("base_stat");
+                        hpVal = statsOBJ.getString("base_stat");
                     else if(i == 1)
-                        attack = " "+tvAttack.getText()+statsOBJ.getString("base_stat");
+                        attack = statsOBJ.getString("base_stat");
                     else if(i == 2)
-                        defense = " "+tvDefense.getText()+statsOBJ.getString("base_stat");
+                        defense = statsOBJ.getString("base_stat");
                     else if(i==3)
-                        specialAtt = " "+tvSpecAttack.getText()+statsOBJ.getString("base_stat");
+                        specialAtt = statsOBJ.getString("base_stat");
                     else if(i==4)
-                        specialDef = " "+tvSpecDef.getText()+statsOBJ.getString("base_stat");
+                        specialDef = statsOBJ.getString("base_stat");
                     else if(i==5)
-                        speed = " "+tvSpeed.getText()+statsOBJ.getString("base_stat");
+                        speed = statsOBJ.getString("base_stat");
                 }
 
 
                 //display the image
                 Picasso.get().load(front_default).into(imgProfile);
+
+                changeTheme(typeVal);
 
                 //displaying values
                 tvIndex.setText(pokemonIndex);
@@ -174,9 +187,96 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void changeTheme(String pokemonType) {
+
+        switch (pokemonType){
+            case "FIGHTING":
+                color = R.color.fighter;
+                break;
+            case "PSYCHIC":
+                color = R.color.pyschic;
+                break;
+            case "POISON":
+                color = R.color.poison;
+                break;
+            case "DRAGON":
+                color = R.color.dragon;
+                break;
+            case "GHOST":
+                color = R.color.ghost;
+                break;
+            case "DARK":
+                color = R.color.dark;
+                break;
+            case "GROUND":
+                color = R.color.ground;
+                break;
+            case "FIRE":
+                color = R.color.fire;
+                break;
+            case "FAIRY":
+                color = R.color.fairy;
+                break;
+            case "WATER":
+                color = R.color.water;
+                break;
+            case "FLYING":
+                color = R.color.flying;
+                break;
+            case "NORMAL":
+                color = R.color.normal;
+                break;
+            case "ROCK":
+                color = R.color.rock;
+                break;
+            case "ELECTRIC":
+                color = R.color.electric;
+                break;
+            case "BUG":
+                color = R.color.bug;
+                break;
+            case "GRASS":
+                color = R.color.grass;
+                break;
+            case "ICE":
+                color = R.color.ice;
+                break;
+            case "STEEL":
+                color = R.color.steel;
+                break;
+            default:
+                color = R.color.purple_700;
+        }
+
+        //change the color of all svg file
+        tvType.setBackgroundColor(getColor(color));
+        curveBg.setColorFilter(ContextCompat.getColor(this, color), PorterDuff.Mode.SRC_IN);
+        ivdesign.setColorFilter(ContextCompat.getColor(this,color),PorterDuff.Mode.SRC_IN);
+
+        changeColor(color); //change the text color
+
+        //change the statusbar color
+        Window window = getWindow();
+        window.setStatusBarColor(ContextCompat.getColor(this, color));
+    }
+
+    void changeColor(int color){
+        tvIndex.setTextColor(getColor(color));
+        tvPokeName.setTextColor(getColor(color));
+        tvType.setTextColor(getColor(R.color.white));
+        tvHP.setTextColor(getColor(color));
+        tvAttack.setTextColor(getColor(color));
+        tvDefense.setTextColor(getColor(color));
+        tvSpecAttack.setTextColor(getColor(color));
+        tvSpecDef.setTextColor(getColor(color));
+        tvSpeed.setTextColor(getColor(color));
+    }
+
     //function where initialize all the views
     private void initialize() {
+        curveBg = findViewById(R.id.ivcurveBg);
         imgProfile = findViewById(R.id.ivPokemon);
+        ivdesign = findViewById(R.id.ivdesign);
         etsearch = findViewById(R.id.etsearch);
         btSearch = findViewById(R.id.btSearch);
         btClear = findViewById(R.id.btClear);
