@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     Context context = MainActivity.this;
     ProgressBar pbHP, pbAttack,pbDefense,pbSpecAttack,pbSpecDef,pbSpeed;
     int color;
+    ProgressBar[] progressBars;
+    TextView[] textViews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-
         //clear the details
         btClear.setOnClickListener(v-> clearContent());
 
@@ -72,19 +73,11 @@ public class MainActivity extends AppCompatActivity {
         tvIndex.setText(R.string.indexID);
         tvPokeName.setText(R.string.phrase);
         tvType.setText(R.string.typeString);
-        tvHP.setText(R.string.defaul_value);
-        tvAttack.setText(R.string.defaul_value);
-        tvDefense.setText(R.string.defaul_value);
-        tvSpecAttack.setText(R.string.defaul_value);
-        tvSpecDef.setText(R.string.defaul_value);
-        tvSpeed.setText(R.string.defaul_value);
 
-        pbHP.setProgress(0);
-        pbAttack.setProgress(0);
-        pbDefense.setProgress(0);
-        pbSpecAttack.setProgress(0);
-        pbSpecDef.setProgress(0);
-        pbSpeed.setProgress(0);
+        //change the progress bar and textview with same default value
+        progressBars = new ProgressBar[]{pbHP,pbAttack,pbDefense,pbSpecAttack,pbSpecDef,pbSpeed};
+        textViews = new TextView[]{tvHP,tvAttack,tvDefense,tvSpecAttack,tvSpecDef,tvSpeed};
+        backToDefaultVal(progressBars,textViews);
     }
 
     private void APICall(String pokemon) {
@@ -198,72 +191,99 @@ public class MainActivity extends AppCompatActivity {
     private void changeTheme(String pokemonType) {
 
         //change what type then set up the color
-        if(pokemonType.equals("FIGHTING"))
-            color = R.color.fighter;
-        else if(pokemonType.equals("PSYCHIC"))
-            color = R.color.pyschic;
-        else if(pokemonType.equals("POISON"))
-            color = R.color.poison;
-        else if(pokemonType.equals("DRAGON"))
-            color = R.color.dragon;
-        else if(pokemonType.equals("GHOST"))
-            color = R.color.ghost;
-        else if(pokemonType.equals("DARK"))
-            color = R.color.dark;
-        else if(pokemonType.equals("GROUND"))
-            color = R.color.ground;
-        else if(pokemonType.equals("FIRE"))
-            color = R.color.fire;
-        else if(pokemonType.equals("FAIRY"))
-            color = R.color.fairy;
-        else if(pokemonType.equals("WATER"))
-            color = R.color.water;
-        else if(pokemonType.equals("FLYING"))
-            color = R.color.flying;
-        else if(pokemonType.equals("NORMAL"))
-            color = R.color.normal;
-        else if(pokemonType.equals("ROCK"))
-            color = R.color.rock;
-        else if(pokemonType.equals("ELECTRIC"))
-            color = R.color.electric;
-        else if(pokemonType.equals("BUG"))
-            color = R.color.bug;
-        else if(pokemonType.equals("GRASS"))
-            color = R.color.grass;
-        else if(pokemonType.equals("ICE"))
-            color = R.color.pyschic;
-        else if(pokemonType.equals("STEEL"))
-            color = R.color.pyschic;
-        else
-            color = R.color.purple_700;
+        switch (pokemonType) {
+            case "FIGHTING":
+                color = R.color.fighter;
+                break;
+            case "PSYCHIC":
+                color = R.color.pyschic;
+                break;
+            case "POISON":
+                color = R.color.poison;
+                break;
+            case "DRAGON":
+                color = R.color.dragon;
+                break;
+            case "GHOST":
+                color = R.color.ghost;
+                break;
+            case "DARK":
+                color = R.color.dark;
+                break;
+            case "GROUND":
+                color = R.color.ground;
+                break;
+            case "FIRE":
+                color = R.color.fire;
+                break;
+            case "FAIRY":
+                color = R.color.fairy;
+                break;
+            case "WATER":
+                color = R.color.water;
+                break;
+            case "FLYING":
+                color = R.color.flying;
+                break;
+            case "NORMAL":
+                color = R.color.normal;
+                break;
+            case "ROCK":
+                color = R.color.rock;
+                break;
+            case "ELECTRIC":
+                color = R.color.electric;
+                break;
+            case "BUG":
+                color = R.color.bug;
+                break;
+            case "GRASS":
+                color = R.color.grass;
+                break;
+            case "ICE":
+                color = R.color.ice;
+                break;
+            case "STEEL":
+                color = R.color.steel;
+                break;
+            default:
+                color = R.color.purple_700;
+                break;
+        }
 
         //change the color of all svg file
         tvType.setBackgroundColor(getColor(color));
         curveBg.setColorFilter(ContextCompat.getColor(this, color), PorterDuff.Mode.SRC_IN);
         ivdesign.setColorFilter(ContextCompat.getColor(this,color),PorterDuff.Mode.SRC_IN);
 
-        changeColor(color); //change the text color
+        changeTextColor(color); //change the text color
         callTransition();
 
-        //change the statusbar color
+        //change the status bar color
         Window window = getWindow();
         window.setStatusBarColor(ContextCompat.getColor(this, color));
 
 
+    }
+
+    void backToDefaultVal(ProgressBar[] pb,TextView[]textViews){
+        for(TextView textView: textViews)
+            textView.setText(R.string.defaul_value);
+
+        //set all the instance of progress bar into 0 progress
+        for (ProgressBar instance: pb)
+            instance.setProgress(0);
 
     }
 
+    void changeTextColor(int color){
+        textViews = new TextView[]{tvIndex,tvPokeName,tvType,tvHP,tvAttack,tvDefense,tvSpecAttack,
+                tvSpecDef,tvSpeed};
 
-    void changeColor(int color){
-        tvIndex.setTextColor(getColor(color));
-        tvPokeName.setTextColor(getColor(color));
+        for(TextView tv:textViews)
+            tv.setTextColor(getColor(color));
+
         tvType.setTextColor(getColor(R.color.white));
-        tvHP.setTextColor(getColor(color));
-        tvAttack.setTextColor(getColor(color));
-        tvDefense.setTextColor(getColor(color));
-        tvSpecAttack.setTextColor(getColor(color));
-        tvSpecDef.setTextColor(getColor(color));
-        tvSpeed.setTextColor(getColor(color));
     }
 
     //function where initialize all the views
