@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,12 +7,16 @@
     tools:ignore="hardcodedText,ButtonStyle,Autofill"
     tools:context=".MainActivity">
 
+
+
     <ImageView
         android:id="@+id/ivcurveBg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/curve_bg"
-        android:layout_marginTop="-90dp" />
+        android:layout_marginTop="-90dp"
+        android:contentDescription="TODO"
+        tools:ignore="ContentDescription" />
 
 
     <ImageView
@@ -22,12 +25,14 @@
         android:layout_height="wrap_content"
         android:src="@drawable/design"
         android:layout_marginEnd="-190dp"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:contentDescription="TODO" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/layout">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -125,211 +130,315 @@
             android:textStyle="bold"
             tools:ignore="RtlHardcoded" />
 
-        <GridLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="2"
-            android:rowCount="3"
-            android:useDefaultMargins="true">
+            android:padding="5dp">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:layout_columnWeight="1"
                 android:orientation="vertical"
-                android:background="@drawable/glass_effect">
+                android:paddingHorizontal="5dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="5sp"
-                    android:text="@string/hpString"
-                    android:textColor="#535353"
-                    android:textSize="14sp" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvHP"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="15sp"
+                        android:textStyle="bold"
+                        android:text="@string/hpString"
+                        android:textColor="#535353"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="5dp">
+
+                        <TextView
+                            android:id="@+id/tvHP"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="@string/defaul_value"
+                            android:textColor="#363B81"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                        <ProgressBar
+                            android:id="@+id/pbHP"
+                            android:layout_width="0dp"
+                            android:layout_weight="4"
+                            android:layout_height="wrap_content"
+                            android:max="255"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/progressbar"
+                            android:progressDrawable="@drawable/progressbar"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:indeterminate="false"
+                            android:indeterminateOnly="false"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+<!--                attack-->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="@string/defaul_value"
-                    android:textColor="#363B81"
-                    android:textSize="32sp"
-                    android:textStyle="bold" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="15sp"
+                        android:textStyle="bold"
+                        android:text="@string/attackString"
+                        android:textColor="#535353"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvAttack"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="@string/defaul_value"
+                            android:textColor="#363B81"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                        <ProgressBar
+                            android:id="@+id/pbAttack"
+                            android:layout_width="0dp"
+                            android:layout_weight="4"
+                            android:layout_height="wrap_content"
+                            android:max="255"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/progressbar"
+                            android:progressDrawable="@drawable/progressbar"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:indeterminate="false"
+                            android:indeterminateOnly="false"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <!--                defense-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="15sp"
+                        android:textStyle="bold"
+                        android:text="@string/defenseString"
+                        android:textColor="#535353"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvDefense"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="@string/defaul_value"
+                            android:textColor="#363B81"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                        <ProgressBar
+                            android:id="@+id/pbDefense"
+                            android:layout_width="0dp"
+                            android:layout_weight="4"
+                            android:layout_height="wrap_content"
+                            android:max="255"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/progressbar"
+                            android:progressDrawable="@drawable/progressbar"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:indeterminate="false"
+                            android:indeterminateOnly="false"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--                special attack-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="15sp"
+                        android:textStyle="bold"
+                        android:text="@string/specialAttString"
+                        android:textColor="#535353"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvSpecAttack"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="@string/defaul_value"
+                            android:textColor="#363B81"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                        <ProgressBar
+                            android:id="@+id/pbSpecAttack"
+                            android:layout_width="0dp"
+                            android:layout_weight="4"
+                            android:layout_height="wrap_content"
+                            android:max="255"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/progressbar"
+                            android:progressDrawable="@drawable/progressbar"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:indeterminate="false"
+                            android:indeterminateOnly="false"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--                special defense-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="15sp"
+                        android:textStyle="bold"
+                        android:text="@string/specDefString"
+                        android:textColor="#535353"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvSpecDef"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="@string/defaul_value"
+                            android:textColor="#363B81"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                        <ProgressBar
+                            android:id="@+id/pbSpecDef"
+                            android:layout_width="0dp"
+                            android:layout_weight="4"
+                            android:layout_height="wrap_content"
+                            android:max="255"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/progressbar"
+                            android:progressDrawable="@drawable/progressbar"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:indeterminate="false"
+                            android:indeterminateOnly="false"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <!--                speeds-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="15sp"
+                        android:textStyle="bold"
+                        android:text="@string/speedString"
+                        android:textColor="#535353"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvSpeed"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="@string/defaul_value"
+                            android:textColor="#363B81"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                        <ProgressBar
+                            android:id="@+id/pbSpeed"
+                            android:layout_width="0dp"
+                            android:layout_weight="4"
+                            android:layout_height="wrap_content"
+                            android:max="255"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/progressbar"
+                            android:progressDrawable="@drawable/progressbar"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:indeterminate="false"
+                            android:indeterminateOnly="false"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_row="0"
-                android:layout_column="1"
-                android:layout_columnWeight="1"
-                android:orientation="vertical"
-                android:background="@drawable/glass_effect">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="5sp"
-                    android:text="@string/attackString"
-                    android:textColor="#535353"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tvAttack"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="@string/defaul_value"
-                    android:textColor="#363B81"
-                    android:textSize="32sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
 
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_row="1"
-                android:layout_column="0"
-                android:layout_columnWeight="1"
-                android:orientation="vertical"
-                android:background="@drawable/glass_effect">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="5sp"
-                    android:text="@string/defenseString"
-                    android:textColor="#535353"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tvDefense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="@string/defaul_value"
-                    android:textColor="#363B81"
-                    android:textSize="32sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_row="1"
-                android:layout_column="1"
-                android:layout_columnWeight="1"
-                android:orientation="vertical"
-                android:background="@drawable/glass_effect">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="5sp"
-                    android:text="@string/specialAttString"
-                    android:textColor="#535353"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tvSpecAttack"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="@string/defaul_value"
-                    android:textColor="#363B81"
-                    android:textSize="32sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_row="2"
-                android:layout_column="0"
-                android:layout_columnWeight="1"
-                android:orientation="vertical"
-                android:background="@drawable/glass_effect">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="5sp"
-                    android:text="@string/specDefString"
-                    android:textColor="#535353"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tvSpecDef"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="@string/defaul_value"
-                    android:textColor="#363B81"
-                    android:textSize="32sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_row="2"
-                android:layout_column="1"
-                android:layout_columnWeight="1"
-                android:orientation="vertical"
-                android:background="@drawable/glass_effect">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="5sp"
-                    android:text="@string/speedString"
-                    android:textColor="#535353"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tvSpeed"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="@string/defaul_value"
-                    android:textColor="#363B81"
-                    android:textSize="32sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-
-        </GridLayout>
+        </ScrollView>
 
     </LinearLayout>
-
-
-
 
 
 

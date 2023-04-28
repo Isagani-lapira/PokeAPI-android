@@ -3,7 +3,6 @@ package com.example.pokemonapi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.PorterDuff;
@@ -15,18 +14,18 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tvIndex, tvPokeName, tvType, tvHP,tvAttack, tvDefense,tvSpecAttack, tvSpecDef,tvSpeed;
     ImageView imgProfile, curveBg,ivdesign;
     Context context = MainActivity.this;
+    ProgressBar pbHP, pbAttack,pbDefense,pbSpecAttack,pbSpecDef,pbSpeed;
     int color;
 
     @Override
@@ -78,6 +78,13 @@ public class MainActivity extends AppCompatActivity {
         tvSpecAttack.setText(R.string.defaul_value);
         tvSpecDef.setText(R.string.defaul_value);
         tvSpeed.setText(R.string.defaul_value);
+
+        pbHP.setProgress(0);
+        pbAttack.setProgress(0);
+        pbDefense.setProgress(0);
+        pbSpecAttack.setProgress(0);
+        pbSpecDef.setProgress(0);
+        pbSpeed.setProgress(0);
     }
 
     private void APICall(String pokemon) {
@@ -148,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
                 Picasso.get().load(front_default).into(imgProfile); //display the image
                 changeTheme(typeVal); //change all the color function
 
+
                 //displaying values
                 tvIndex.setText(pokemonIndex);
                 tvPokeName.setText(pokemonName);
@@ -159,6 +167,13 @@ public class MainActivity extends AppCompatActivity {
                 tvSpecDef.setText(specialDef);
                 tvSpeed.setText(speed);
 
+                //add progress in progress bar for all base stat
+                pbHP.setProgress(Integer.parseInt(hpVal));
+                pbAttack.setProgress(Integer.parseInt(attack));
+                pbDefense.setProgress(Integer.parseInt(defense));
+                pbSpecAttack.setProgress(Integer.parseInt(specialAtt));
+                pbSpecDef.setProgress(Integer.parseInt(specialDef));
+                pbSpeed.setProgress(Integer.parseInt(speed));
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -233,7 +248,11 @@ public class MainActivity extends AppCompatActivity {
         //change the statusbar color
         Window window = getWindow();
         window.setStatusBarColor(ContextCompat.getColor(this, color));
+
+
+
     }
+
 
     void changeColor(int color){
         tvIndex.setTextColor(getColor(color));
@@ -255,6 +274,8 @@ public class MainActivity extends AppCompatActivity {
         etsearch = findViewById(R.id.etsearch);
         btSearch = findViewById(R.id.btSearch);
         btClear = findViewById(R.id.btClear);
+
+        //text view
         tvIndex = findViewById(R.id.tvIndex);
         tvPokeName = findViewById(R.id.tvPokeName);
         tvType = findViewById(R.id.tvType);
@@ -265,9 +286,19 @@ public class MainActivity extends AppCompatActivity {
         tvSpecDef = findViewById(R.id.tvSpecDef);
         tvSpeed = findViewById(R.id.tvSpeed);
 
+        //progress bar
+        pbHP = findViewById(R.id.pbHP);
+        pbAttack = findViewById(R.id.pbAttack);
+        pbDefense = findViewById(R.id.pbDefense);
+        pbSpecAttack = findViewById(R.id.pbSpecAttack);
+        pbSpecDef = findViewById(R.id.pbSpecDef);
+        pbSpeed = findViewById(R.id.pbSpeed);
+
 
         //shaking animation
         imgProfile.setAnimation(AnimationUtils.loadAnimation(this,R.anim.shaking));
+
+
     }
 
     void callTransition(){
