@@ -1,21 +1,17 @@
 package com.example.pokemonapi;
 
-import androidx.annotation.ColorRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -74,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         etsearch.setText("");
         imgProfile.setImageResource(R.drawable.pngegg);
         tvIndex.setText(R.string.indexID);
-        tvPokeName.setText("Who's your Pokemon?");
+        tvPokeName.setText(R.string.phrase);
         tvType.setText(R.string.typeString);
         tvHP.setText(R.string.defaul_value);
         tvAttack.setText(R.string.defaul_value);
@@ -106,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
             try {
 
-                //pokemon image
+                //get pokemon image
                 JSONObject profile = response.getJSONObject("sprites");
                 JSONObject other = profile.getJSONObject("other");
                 JSONObject home = other.getJSONObject("home");
@@ -115,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //for tvindex
                 String id = response.getString("id");
-                String pokemonIndex = "#"+tvIndex.getText()+id;
+                String pokemonIndex = "#"+id;
 
                 //for tvPokeName
                 JSONObject species = response.getJSONObject("species");
@@ -149,11 +145,8 @@ public class MainActivity extends AppCompatActivity {
                         speed = statsOBJ.getString("base_stat");
                 }
 
-
-                //display the image
-                Picasso.get().load(front_default).into(imgProfile);
-
-                changeTheme(typeVal);
+                Picasso.get().load(front_default).into(imgProfile); //display the image
+                changeTheme(typeVal); //change all the color function
 
                 //displaying values
                 tvIndex.setText(pokemonIndex);
@@ -189,64 +182,45 @@ public class MainActivity extends AppCompatActivity {
 
     private void changeTheme(String pokemonType) {
 
-        switch (pokemonType){
-            case "FIGHTING":
-                color = R.color.fighter;
-                break;
-            case "PSYCHIC":
-                color = R.color.pyschic;
-                break;
-            case "POISON":
-                color = R.color.poison;
-                break;
-            case "DRAGON":
-                color = R.color.dragon;
-                break;
-            case "GHOST":
-                color = R.color.ghost;
-                break;
-            case "DARK":
-                color = R.color.dark;
-                break;
-            case "GROUND":
-                color = R.color.ground;
-                break;
-            case "FIRE":
-                color = R.color.fire;
-                break;
-            case "FAIRY":
-                color = R.color.fairy;
-                break;
-            case "WATER":
-                color = R.color.water;
-                break;
-            case "FLYING":
-                color = R.color.flying;
-                break;
-            case "NORMAL":
-                color = R.color.normal;
-                break;
-            case "ROCK":
-                color = R.color.rock;
-                break;
-            case "ELECTRIC":
-                color = R.color.electric;
-                break;
-            case "BUG":
-                color = R.color.bug;
-                break;
-            case "GRASS":
-                color = R.color.grass;
-                break;
-            case "ICE":
-                color = R.color.ice;
-                break;
-            case "STEEL":
-                color = R.color.steel;
-                break;
-            default:
-                color = R.color.purple_700;
-        }
+        //change what type then set up the color
+        if(pokemonType.equals("FIGHTING"))
+            color = R.color.fighter;
+        else if(pokemonType.equals("PSYCHIC"))
+            color = R.color.pyschic;
+        else if(pokemonType.equals("POISON"))
+            color = R.color.poison;
+        else if(pokemonType.equals("DRAGON"))
+            color = R.color.dragon;
+        else if(pokemonType.equals("GHOST"))
+            color = R.color.ghost;
+        else if(pokemonType.equals("DARK"))
+            color = R.color.dark;
+        else if(pokemonType.equals("GROUND"))
+            color = R.color.ground;
+        else if(pokemonType.equals("FIRE"))
+            color = R.color.fire;
+        else if(pokemonType.equals("FAIRY"))
+            color = R.color.fairy;
+        else if(pokemonType.equals("WATER"))
+            color = R.color.water;
+        else if(pokemonType.equals("FLYING"))
+            color = R.color.flying;
+        else if(pokemonType.equals("NORMAL"))
+            color = R.color.normal;
+        else if(pokemonType.equals("ROCK"))
+            color = R.color.rock;
+        else if(pokemonType.equals("ELECTRIC"))
+            color = R.color.electric;
+        else if(pokemonType.equals("BUG"))
+            color = R.color.bug;
+        else if(pokemonType.equals("GRASS"))
+            color = R.color.grass;
+        else if(pokemonType.equals("ICE"))
+            color = R.color.pyschic;
+        else if(pokemonType.equals("STEEL"))
+            color = R.color.pyschic;
+        else
+            color = R.color.purple_700;
 
         //change the color of all svg file
         tvType.setBackgroundColor(getColor(color));
@@ -254,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
         ivdesign.setColorFilter(ContextCompat.getColor(this,color),PorterDuff.Mode.SRC_IN);
 
         changeColor(color); //change the text color
+        callTransition();
 
         //change the statusbar color
         Window window = getWindow();
@@ -291,7 +266,18 @@ public class MainActivity extends AppCompatActivity {
         tvSpeed = findViewById(R.id.tvSpeed);
 
 
+        //shaking animation
         imgProfile.setAnimation(AnimationUtils.loadAnimation(this,R.anim.shaking));
+    }
+
+    void callTransition(){
+        //slide down animation to the curve background
+        Animation slide_down = AnimationUtils.loadAnimation(context,R.anim.slide_down);
+        curveBg.setAnimation(slide_down);
+
+        //slide left animation to the pokemon
+        Animation slide_left = AnimationUtils.loadAnimation(context,R.anim.slide_left);
+        imgProfile.setAnimation(slide_left);
     }
 
 }

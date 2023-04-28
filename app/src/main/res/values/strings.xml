@@ -11,4 +11,5 @@
     <string name="hpString">HP: </string>
     <string name="warning_statement">The pokemon you are searching is not currently in the index please make sure the pokemon you looking is existed in the pokemon world</string>
     <string name="defaul_value">0</string>
+    <string name="phrase">Who\'s your Pokemon?</string>
 </resources>
